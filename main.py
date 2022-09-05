@@ -38,7 +38,8 @@ def get_weather():
     print('请设置城市')
     return None
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
-  res = requests.get(url).json()
+  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
+  res = requests.get(url, timeout=100).json()
   if res is None:
     return None
   if res['code'] != 0:
@@ -80,7 +81,8 @@ def get_counter_left(aim_date):
 
 # 彩虹屁 接口不稳定，所以失败的话会重新调用，直到成功
 def get_words():
-  words = requests.get("https://api.shadiao.pro/chp")
+  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
+  words = requests.get("https://api.shadiao.pro/chp", timeout=100)
   if words.status_code != 200:
     return get_words()
   return words.json()['data']['text']
